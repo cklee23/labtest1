@@ -1,19 +1,14 @@
 pipeline {
-    agent any
-    stages {
+	agent any
+	stages{
 
-        stage('Deploy'){
-        	steps {
-                sh "docker compose up -d"
-        	}
-        }      
-        stage('OWASP DependencyCheck') {
+		stage('OWASP DependencyCheck') {
 			steps {
-				dependencyCheck additionalArguments: '--format HTML --format XML', odcInstallation: 'Labtest1'
+				dependencyCheck additionalArguments: '--format HTML --format XML', odcInstallation: 'test1'
 			}
 		}
-    }   
-    post {
+	}	
+	post {
 		success {
 			dependencyCheckPublisher pattern: 'dependency-check-report.xml'
 		}
